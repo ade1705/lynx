@@ -1,0 +1,55 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;800;900&display=swap');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+.bg-gradient {
+    background: #E8F2FF;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to top, #FFFDE4, #E8F2FF);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to top, #FFFDE4, #E8F2FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.outline-0 {
+    outline: 0;
+}
+
+.nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
+    color: $blue;
+    background-color: #f8fafc;
+    border: 0;
+    border-bottom: $blue solid 3px!important;
+}
+
+.font-weight {
+    &-400 {
+        font-weight: 400;
+    }
+    &-500 {
+        font-weight: 500;
+    }
+}
+
+.height {
+    &-35 {
+        height: 35px;
+    }
+    &-200 {
+        height: 200px;
+    }
+}
+
+.margin-minus {
+  &-top {
+      &-50 {
+          margin-top: -50px
+      }
+  }
+}
+
+.services-bg {
+    background: url("https://cdn-static.findly.com/wp-content/uploads/sites/1121/2020/03/jobdescription-1560174390158.jpg");
+}
