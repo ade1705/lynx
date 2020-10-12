@@ -73,10 +73,7 @@
                     <hr/>
                     <div class="text-right">
                         <label>Card</label>
-                        <div id="card-element">
-
-                        </div>
-                        <a href="#" class="btn btn-primary">Make Payment</a>
+                        <stripe-payment></stripe-payment>
                     </div>
                 </div>
             </div>
@@ -85,8 +82,10 @@
 </template>
 
 <script>
+    import StripePayment from "./StripePayment";
     export default {
         name: "Orders",
+        components: {StripePayment},
         props: ['orders'],
         mounted(){
             this.includeStripe('js.stripe.com/v3/', function(){

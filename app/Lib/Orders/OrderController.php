@@ -26,21 +26,27 @@ class OrderController extends Controller
      * @var ServiceRepository
      */
     private $serviceRepository;
+    /**
+     * @var StripeCustomerHandler
+     */
+    private $customerHandler;
 
-    public function __construct(OrderRepository $orderRepository, UserRepository $userRepository, ServiceRepository $serviceRepository)
+    public function __construct(OrderRepository $orderRepository, UserRepository $userRepository, ServiceRepository $serviceRepository, StripeCustomerHandler $customerHandler)
     {
         $this->middleware('auth');
         $this->orderRepository = $orderRepository;
         $this->userRepository = $userRepository;
         $this->serviceRepository = $serviceRepository;
+        $this->customerHandler = $customerHandler;
     }
 
     public function index()
     {
         $title = "Order";
         $subtitle = "Manage your orders";
+        $createRoute = 'dashboard-orders-new';
         $orders = $this->orderRepository->getByProviderId(Auth::id());
-        return view('dashboard.orders.index', compact('title', 'subtitle', 'orders'));
+        return view('dashboard.orders.index', compact('title', 'subtitle', 'orders', 'createRoute'));
     }
 
     public function create()
@@ -59,12 +65,15 @@ class OrderController extends Controller
         $order->fill($data);
         $this->orderRepository->save($order);
         $user = $userRepository->find($request->order_customer_id);
-        $stripeCustomerHandler->getCustomerStripeCustomerId($user);
         return redirect()->route('dashboard-orders')->with('Order Created');
     }
 
-    public function pay(int $orderId)
+    public function pay(int $userId, $paymentId)
     {
-
+        $user = $this->userRepository->find($userId);
+        $this->stripeCustomerHandler->getCustomerStripeCustomerId($user);
+        $stripeCharge = $user->charge(100, $paymentId);
+        //check if success, update status and then return
+        var_dump($stripeCharge);
     }
 }
