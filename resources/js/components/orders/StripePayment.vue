@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h4>herh</h4>
+        <hr />
+        <h3>Pay Invoice here</h3>
         <label>Card</label>
         <div id="card-element">
 
@@ -19,6 +20,7 @@
                 this.configureStripe();
             }.bind(this) );
         },
+        props: ['order_id', 'user_id', 'callback'],
         data(){
             return {
                 stripeAPIToken: 'pk_test_51HYtK4IkgVE5fsdbw5t4QKt9H1ZwBNYLT3AwJ3ph2sRflM1hp9n1KQ3KwKiuOCw3bOsxGzLx3ZipFNplaqpTqsZC00OXytB36F',
@@ -36,11 +38,12 @@
                     }
                 ).then((result) => {
                    this.paymentMethodId = result.paymentMethod.id;
-                    axios.get('/payment/1/' + this.paymentMethodId)
+                    axios.get(`/payment/${this.user_id}/${this.order_id}/${this.paymentMethodId}`)
                         .then(res => {
-                            console.log(res);
+                            alert('Invoice paid successfully');
+                            this.callback();
                         }).catch(err => {
-                        console.log(err)
+                        alert('Error Occured');
                     })
                 });
             },

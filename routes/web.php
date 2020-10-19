@@ -43,7 +43,7 @@ Route::post('/dashboard/orders', [OrderController::class, 'store'])->name('dashb
 Route::get('/dashboard/orders/new', [OrderController::class, 'create'])->name('dashboard-orders-new');
 Route::patch('/dashboard/orders/{id}', [OrderController::class, 'update'])->name('dashboard-orders-update');
 
-Route::get('/payment/{userId}/{paymentId}', [OrderController::class, 'pay'])->name('orders-pay');
+Route::get('/payment/{userId}/{orderId}/{paymentId}', [OrderController::class, 'pay'])->name('orders-pay');
 
 Route::get('/dashboard/messages', [MessagesController::class, 'index'])->name('dashboard-messages');
 Route::post('/messages', [MessagesController::class, 'store'])->name('messages-new');

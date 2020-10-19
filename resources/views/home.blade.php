@@ -24,7 +24,7 @@
                 <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                     <div class="row">
                         @foreach($services as $service)
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 @include('services.row-service')
                             </div>
                         @endforeach
@@ -32,14 +32,14 @@
                 </div>
                 <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                     @foreach($services as $service)
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             @include('services.row-service')
                         </div>
                     @endforeach
                 </div>
                 <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
                     @foreach($services as $service)
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             @include('services.row-service')
                         </div>
                     @endforeach

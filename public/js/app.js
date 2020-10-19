@@ -2154,18 +2154,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Orders",
   components: {
     StripePayment: _StripePayment__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
-  props: ['orders'],
-  mounted: function mounted() {
-    this.includeStripe('js.stripe.com/v3/', function () {
-      this.configureStripe();
-    }.bind(this));
-  },
+  props: ['orders', 'user_id'],
   data: function data() {
     return {
       stripeAPIToken: 'pk_test_51HYtK4IkgVE5fsdbw5t4QKt9H1ZwBNYLT3AwJ3ph2sRflM1hp9n1KQ3KwKiuOCw3bOsxGzLx3ZipFNplaqpTqsZC00OXytB36F',
@@ -2200,6 +2196,9 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    updateOrder: function updateOrder() {
+      this.selectedOrder.order_has_paid = 'yes';
+    },
     selectOrder: function selectOrder(order) {
       this.selectedOrder = order;
       this.showOrder = true;
@@ -2252,6 +2251,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "StripePayment",
   mounted: function mounted() {
@@ -2259,6 +2259,7 @@ __webpack_require__.r(__webpack_exports__);
       this.configureStripe();
     }.bind(this));
   },
+  props: ['order_id', 'user_id', 'callback'],
   data: function data() {
     return {
       stripeAPIToken: 'pk_test_51HYtK4IkgVE5fsdbw5t4QKt9H1ZwBNYLT3AwJ3ph2sRflM1hp9n1KQ3KwKiuOCw3bOsxGzLx3ZipFNplaqpTqsZC00OXytB36F',
@@ -2278,10 +2279,12 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (result) {
         _this.paymentMethodId = result.paymentMethod.id;
-        axios.get('/payment/1/' + _this.paymentMethodId).then(function (res) {
-          console.log(res);
+        axios.get("/payment/".concat(_this.user_id, "/").concat(_this.order_id, "/").concat(_this.paymentMethodId)).then(function (res) {
+          alert('Invoice paid successfully');
+
+          _this.callback();
         })["catch"](function (err) {
-          console.log(err);
+          alert('Error Occured');
         });
       });
     },
@@ -59520,9 +59523,29 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("a", { attrs: { href: "/services/1" } }, [
-                  _c("h5", { staticClass: "m-0" }, [
+                  _c("h5", { staticClass: "m-0 d-inline-block" }, [
                     _vm._v(" " + _vm._s(_vm.selectedOrder.order_job_name))
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "small",
+                    {
+                      staticClass: "badge py-1 px-2",
+                      class:
+                        _vm.selectedOrder.order_has_paid === "yes"
+                          ? "badge-success"
+                          : "badge-danger"
+                    },
+                    [
+                      _vm._v(
+                        _vm._s(
+                          _vm.selectedOrder.order_has_paid === "yes"
+                            ? "Paid"
+                            : "Not Paid"
+                        )
+                      )
+                    ]
+                  )
                 ]),
                 _vm._v(" "),
                 _c("p", { staticClass: "m-0" }, [
@@ -59577,15 +59600,17 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _c("hr"),
-            _vm._v(" "),
             _c(
               "div",
               { staticClass: "text-right" },
               [
-                _c("label", [_vm._v("Card")]),
-                _vm._v(" "),
-                _c("stripe-payment")
+                _c("stripe-payment", {
+                  attrs: {
+                    order_id: _vm.selectedOrder.order_id,
+                    user_id: _vm.user_id,
+                    callback: _vm.updateOrder
+                  }
+                })
               ],
               1
             )
@@ -59648,7 +59673,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h4", [_vm._v("herh")]),
+    _c("hr"),
+    _vm._v(" "),
+    _c("h3", [_vm._v("Pay Invoice here")]),
     _vm._v(" "),
     _c("label", [_vm._v("Card")]),
     _vm._v(" "),

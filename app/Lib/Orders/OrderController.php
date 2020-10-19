@@ -68,12 +68,15 @@ class OrderController extends Controller
         return redirect()->route('dashboard-orders')->with('Order Created');
     }
 
-    public function pay(int $userId, $paymentId)
+    public function pay(int $userId, $orderId, $paymentId)
     {
         $user = $this->userRepository->find($userId);
-        $this->stripeCustomerHandler->getCustomerStripeCustomerId($user);
+        $this->customerHandler->getCustomerStripeCustomerId($user);
         $stripeCharge = $user->charge(100, $paymentId);
-        //check if success, update status and then return
         var_dump($stripeCharge);
+        $this->orderRepository->updateStatus($orderId);
+        return response()->json([
+            'status' => 'success'
+        ]);
     }
 }

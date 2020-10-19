@@ -11009,3 +11009,7 @@ a.text-dark:focus {
   text-transform: uppercase;
 }
 
+.height-300 {
+  height: 300px;
+}
+

@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
 {
+    const ORDER_STATUS_PENDING = 'pending';
+    const ORDER_STATUS_COMPLETE = 'completed';
     /**
      * @var string
      */

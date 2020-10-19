@@ -3,7 +3,6 @@
 @section('content')
 <div>
     @include('dashboard.header')
-    sdd
-    <orders :orders="'{{ $orders }}'"></orders>
+    <h1>{{ \Auth::user()->id }}</h1>
 </div>
 @endsection

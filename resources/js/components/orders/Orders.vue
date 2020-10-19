@@ -46,7 +46,10 @@
                     <div class="d-flex justify-content-between">
                         <div class="mr-3">
                             <td><small class="badge badge-warning py-1 px-2">{{ selectedOrder.order_status}}</small></td>
-                            <a href="/services/1"><h5 class="m-0"> {{ selectedOrder.order_job_name }}</h5></a>
+                            <a href="/services/1">
+                                <h5 class="m-0 d-inline-block"> {{ selectedOrder.order_job_name }}</h5>
+                                <small class="badge py-1 px-2" v-bind:class="selectedOrder.order_has_paid === 'yes' ? 'badge-success' : 'badge-danger'">{{ selectedOrder.order_has_paid === 'yes' ? 'Paid' : 'Not Paid'}}</small>
+                            </a>
                             <p class="m-0"> <a :href="`/service-providers/${selectedOrder.order_provider_id}`" class="text-muted small">{{ selectedOrder.provider.name }}</a></p>
                         </div>
                         <div class="margin-top-minus-50">
@@ -70,10 +73,8 @@
                             </p>
                         </div>
                     </div>
-                    <hr/>
                     <div class="text-right">
-                        <label>Card</label>
-                        <stripe-payment></stripe-payment>
+                        <stripe-payment :order_id="selectedOrder.order_id" :user_id="user_id" :callback="updateOrder"></stripe-payment>
                     </div>
                 </div>
             </div>
@@ -86,12 +87,7 @@
     export default {
         name: "Orders",
         components: {StripePayment},
-        props: ['orders'],
-        mounted(){
-            this.includeStripe('js.stripe.com/v3/', function(){
-                this.configureStripe();
-            }.bind(this) );
-        },
+        props: ['orders', 'user_id'],
         data() {
             return {
                 stripeAPIToken: 'pk_test_51HYtK4IkgVE5fsdbw5t4QKt9H1ZwBNYLT3AwJ3ph2sRflM1hp9n1KQ3KwKiuOCw3bOsxGzLx3ZipFNplaqpTqsZC00OXytB36F',
@@ -121,6 +117,9 @@
             }
         },
         methods: {
+            updateOrder: function () {
+                this.selectedOrder.order_has_paid = 'yes';
+            },
             selectOrder: function (order) {
                 this.selectedOrder = order;
                 this.showOrder = true;
