@@ -4,22 +4,13 @@
     <meta charset="UTF-8">
     <title>Everlytic</title>
 </head>
-<body>
-    <div class="container">
-        <img src="ev-logo.png" width="500" class="logo"/>
-        <div class="shadow"></div>
-        <br />
-        <h1>This Page/URL is being used by services of <b>Everlytic</b>.</h1>
-        <p>Everlytic is a bulk email and SMS marketing platform for marketers. For more info please visit our website <br/>
-            <b><a href="https://www.everlytic.co.za" class="text-primary">(https://www.everlytic.co.za)</a></b>
-        </p>
-    </div>
+
 <style>
     @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@400;700&display=swap');
     body {
         font-family: 'PT Sans', sans-serif;
         color: #092933;
-        font-size: 14px;
+        font-size: 18px;
     }
     .text-primary {
         color: #092933;
@@ -34,6 +25,7 @@
     }
     .logo {
         animation: 3s infinite alternate floating;
+        width: 500px;
     }
     .shadow{
         height:2px;
@@ -67,6 +59,22 @@
             box-shadow:0px 10px 8px rgba(0,0,0,.8);
         }
     }
+    @media only screen and (max-width: 600px) {
+        .logo {
+            animation: 3s infinite alternate floating;
+            width: 250px;
+        }
+    }
 </style>
+<body>
+<div class="container">
+    <img src="http://styleguide.everlytic.com/images/logo.png" class="logo"/>
+    <div class="shadow"></div>
+    <br />
+    <h1>This Page/URL is being used by services of <b>Everlytic</b>.</h1>
+    <p>Everlytic is a bulk email and SMS marketing platform for marketers. For more info please visit our website <br/>
+        <b><a href="https://www.everlytic.co.za" class="text-primary">(https://www.everlytic.co.za)</a></b>
+    </p>
+</div>
 </body>
 </html>
