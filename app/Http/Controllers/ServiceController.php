@@ -24,7 +24,15 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        return view('services.services');
+        $services = $this->serviceRepository->getServices();
+        return view('services.services', compact('services'));
+    }
+
+    public function search(Request $request)
+    {
+        $categoryId = $request->category_id ?? 0;
+        $services = $this->serviceRepository->getServices($categoryId);
+        return view('services.services', compact('services'));
     }
 
     /**

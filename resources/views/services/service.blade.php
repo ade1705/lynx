@@ -6,10 +6,11 @@
         <div class="container">
             <div class="py-4 d-flex justify-content-between">
                 <div>
+                    <h4 class="m-0 text-danger">{{ $service->formatted_service_price }}</h4>
                     <h1 class="m-0 mb-2 display-4 font-weight-500">{{ $service->service_title }}</h1>
-                    <p>
-                        <span class="pr-3"><i data-feather="star"></i>  4.6</span>  <a href="" class="px-3 border-left font-weight-500"> 26 Reviews </a>
-                    </p>
+{{--                    <p>--}}
+{{--                        <span class="pr-3"><i data-feather="star"></i>  4.6</span>  <a href="" class="px-3 border-left font-weight-500"> 26 Reviews </a>--}}
+{{--                    </p>--}}
                     <p class="m-0">by <a href="/service-providers/{{ $service->user->id }}">{{ $service->user->name }}</a></p>
                 </div>
                 <div class="d-flex align-items-center">

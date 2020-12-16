@@ -25,6 +25,19 @@ class ServiceRepository
     }
 
     /**
+     * @param int $categoryId
+     * @return Collection
+     */
+    public function getServices(int $categoryId = 0): Collection
+    {
+        $query = Service::with('images');
+        if ($categoryId > 0) {
+            $query->where('service_category_id', $categoryId);
+        }
+        return $query->get();
+    }
+
+    /**
      * @param string $slug
      * @return Service
      */

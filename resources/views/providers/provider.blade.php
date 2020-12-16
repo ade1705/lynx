@@ -48,7 +48,7 @@
                     <div class="py-3">
                         <h2 class="font-weight-bold">Services</h2>
                         <div class="row">
-                            @foreach($services as $service)<div class="col-md-4 py-3">
+                            @foreach($services as $service)<div class="col-md-6 py-3">
                                 @include('services.row-service', ['service' => $service])
                             </div>
                             @endforeach
@@ -56,27 +56,37 @@
                     </div>
                 </div>
                 <div class="col-md-4">
-
-                    <h2 class="font-weight-bold">Reviews</h2>
-                    <div class="p-5 border">
-                        <div class="">
-                            <div class="height-250">
-                                <h4 class="mb-3">Excellent Work from Koko</h4>
-                                <h6 class="font-weight-normal">Lorem ipsum dolor sit amet non placerat risusLorem ipsum dolor sit amet, consectetur adipiscinge elit. Ut vitae mattis diam, non placerat risus</h6>
-                                <h6 class="font-weight-normal">Lorem ipsum dolor sit amet non placerat risusLorem ipsum dolor sit amet, consectetur adipiscinge elit. Ut vitae mattis diam, non placerat risus</h6>
-                                <h5 class="text-danger mt-4 font-weight-bold"><i data-feather="star" class="feather2"></i><i data-feather="star" class="feather2"></i><i data-feather="star" class="feather2"></i><i data-feather="star" class="feather2"></i></h5>
-                            </div>
-                            <div class="d-flex">
-                                <div>
-                                    <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&h=50&q=60" class="rounded-circle" />
+                    <div class="d-flex justify-content-between">
+                        <h2 class="font-weight-bold">Reviews</h2>
+                        @include('review.add-new-review')
+                    </div>
+                    <div class="border bg-white shadow-sm">
+                        <div class="height-300 overflow-auto p-4 pr-0">
+                            @foreach($reviews as $review)
+                                <div class="review border-bottom py-2">
+                                    <div class="d-flex">
+                                        <div>
+                                            <img src="{{ $review->user->profile->profile_full_avatar }}" width="40" class="rounded-circle" />
+                                        </div>
+                                        <div class="m-0 p-0 ml-2">
+                                            <h5 class="m-0 font-weight-bold">{{ $review->user->name }}</h5>
+                                            <span class="text-muted d-block">Customer</span>
+                                        </div>
+                                    </div>
+                                    <div class="height-250">
+                                        <div class="d-flex py-2">
+                                            <p class="text-danger">
+                                                @for($i=1; $i<=$review->review_rating;$i++)
+                                                    <i data-feather="star" class="feather2"></i>
+                                                @endfor
+                                            </p>
+                                            <span class="text-muted ml-2">{{ $review->updated_at->diffForHumans() }}</span>
+                                        </div>
+                                        <p>{{ $review->review }}</p>
+                                        </div>
                                 </div>
-                                <div class="m-0 p-0 ml-2">
-                                    <span class="text-secondary font-weight-bold">Jane Doe</span>
-                                    <span class="text-muted small d-block">Customer</span>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
-
                     </div>
                     <div class="py-4">
                         <h2 class="font-weight-bold">Gallery</h2>

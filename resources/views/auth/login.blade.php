@@ -3,10 +3,10 @@
 @section('content')
     <div class="container py-md-5 mt-md-5">
         <div class="row justify-content-center p-md-0 p-3">
-            <div class="col-md-4 shadow">
+            <div class="col-md-5">
                 <div class="p-4">
-                    <h1 class="font-weight-bold">Holla, Amigo!</h1>
-                    <p>However, this markup can be simplified using a simple CSS class to avoid repetition of SVG attributes between icons:</p>
+                    <h1 class="font-weight-bold">Welcome Back!</h1>
+{{--                    <p>However, this markup can be simplified using a simple CSS class to avoid repetition of SVG attributes between icons:</p>--}}
 
                     <form method="POST" action="{{ route('login') }}">
                         @csrf

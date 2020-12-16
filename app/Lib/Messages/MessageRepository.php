@@ -21,7 +21,7 @@ class MessageRepository
     {
         return Message::where('message_sender_id', '=', $userId)
             ->orWhere('message_receiver_id', '=', $userId)
-            ->with('sender')
+            ->with('sender.profile')
             ->get()
             ->groupBy('message_sender_id');
     }

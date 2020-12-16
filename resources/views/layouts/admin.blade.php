@@ -28,7 +28,7 @@
 
                         </div>
                         <div class="mb-3">
-                            <a class="btn btn-light btn-lg btn-block">Add New Service</a>
+                            <a class="btn btn-light btn-lg btn-block" href="/dashboard/services/new">Add New Service</a>
                         </div>
                         <ul class="nav flex-column">
                             <li class="nav-item">
@@ -79,5 +79,8 @@
             </div>
         </div>
     </div>
+<script>
+    window.userAvatar = "<?php echo \Auth::user()->profile->profile_full_avatar ?>";
+</script>
 </body>
 </html>

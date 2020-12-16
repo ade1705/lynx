@@ -68,13 +68,19 @@ class OrderController extends Controller
         return redirect()->route('dashboard-orders')->with('Order Created');
     }
 
+    public function updateStatus(int $orderId, string $status)
+    {
+        $this->orderRepository->updateOrderStatus($orderId, $status);
+        return redirect()->back()->with('Order Status Updated');
+    }
+
     public function pay(int $userId, $orderId, $paymentId)
     {
         $user = $this->userRepository->find($userId);
         $this->customerHandler->getCustomerStripeCustomerId($user);
         $stripeCharge = $user->charge(100, $paymentId);
         var_dump($stripeCharge);
-        $this->orderRepository->updateStatus($orderId);
+        $this->orderRepository->updatePaymentStatusToPaid($orderId);
         return response()->json([
             'status' => 'success'
         ]);

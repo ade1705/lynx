@@ -12,10 +12,12 @@
 */
 
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ServiceController;
 use App\lib\Dashboard\Services\DashboardServicesController;
 use App\Lib\Messages\MessagesController;
 use App\Lib\Orders\OrderController;
 use App\Lib\Profile\ProfileController;
+use App\Lib\Reviews\ReviewController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -38,8 +40,14 @@ Route::get('/dashboard/settings', 'DashboardController@settings')->name('dashboa
 Route::get('/dashboard/profile', [ProfileController::class, 'index'])->name('dashboard-profile');
 Route::patch('/dashboard/profile/{id}', [ProfileController::class, 'update'])->name('dashboard-profile-update');
 
+Route::post('/service-provider/review', [ReviewController::class, 'save'])->name('new-review');
+
+Route::get('/services/search', [ServiceController::class, 'search'])->name('search-services');
+Route::post('/services/search', [ServiceController::class, 'search'])->name('search-services');
+
 Route::get('/dashboard/orders', [OrderController::class, 'index'])->name('dashboard-orders');
 Route::post('/dashboard/orders', [OrderController::class, 'store'])->name('dashboard-orders-store');
+Route::get('/dashboard/orders/{orderId}/{status}', [OrderController::class, 'updateStatus'])->name('dashboard-orders-update-status');
 Route::get('/dashboard/orders/new', [OrderController::class, 'create'])->name('dashboard-orders-new');
 Route::patch('/dashboard/orders/{id}', [OrderController::class, 'update'])->name('dashboard-orders-update');
 

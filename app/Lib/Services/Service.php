@@ -14,6 +14,8 @@ class Service extends Model
 {
     use SoftDeletes;
 
+    const SERVICE_CATEGORIES  = ["Business Cards", "Logos", "Video Editing", "Accounting & Tax Services"];
+
     /**
      * @var string
      */

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Lib\Profile\Profile;
 use App\Lib\Profile\ProfileRepository;
+use App\Lib\Reviews\ReviewRepository;
 use App\Lib\ServiceImages\ServiceImage;
 use App\Lib\Services\Service;
 use Illuminate\Http\Request;
@@ -14,10 +15,15 @@ class ProviderController extends Controller
      * @var ProfileRepository
      */
     private $profileRepository;
+    /**
+     * @var ReviewRepository
+     */
+    private $reviewRepository;
 
-    public function __construct(ProfileRepository $profileRepository)
+    public function __construct(ProfileRepository $profileRepository, ReviewRepository $reviewRepository)
     {
         $this->profileRepository = $profileRepository;
+        $this->reviewRepository = $reviewRepository;
     }
 
     /**
@@ -61,7 +67,8 @@ class ProviderController extends Controller
     {
         $services = Service::all();
         $profile = $this->profileRepository->findOrCreate($id);
-        return view('providers.provider', compact('services', 'profile'));
+        $reviews = $this->reviewRepository->getProviderReviews($id);
+        return view('providers.provider', compact('services', 'profile', 'reviews'));
     }
 
     /**

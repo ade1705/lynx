@@ -6,7 +6,7 @@
                 <div class="p-3 mb-3 border-bottom" role="button" @click="toggleMessage(message)"  v-for="(message, index) in messages" :key="index">
                     <div>
                         <div class="media">
-                            <img src="https://images.unsplash.com/photo-1551741568-53a19562313c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&h=50&q=60" class="mr-3 rounded" alt="...">
+                            <img :src="`/uploads/${message[0].sender.profile.profile_avatar}`" width="60" class="mr-3 rounded" alt="...">
                             <div class="media-body">
                                 <div class="d-flex justify-content-between">
                                     <h5 class="m-0">{{ message[0].sender.name }}</h5>
@@ -25,7 +25,7 @@
                         <div class="max-width-80-percent min-width-40-percent">
                             <div class="d-flex align-items-center">
                                 <div>
-                                    <img src="https://images.unsplash.com/photo-1551741568-53a19562313c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&h=40&q=60" class="rounded-circle" alt="...">
+                                    <img :src="senderAvatar" width="60" class="rounded-circle" alt="...">
                                 </div>
                                 <h5 class="m-0 mx-1">{{ conversation.sender.name }}</h5>
                                 <small class="text-muted">{{ conversation.created_formatted }}</small>
@@ -61,6 +61,7 @@
                 showMessage: false,
                 message: '',
                 selectedMessage: {},
+                senderAvatar: '',
                 items: [
                     { message: 'Foo' },
                     { message: 'Foo' },
@@ -82,6 +83,7 @@
             },
             toggleMessage: function (message) {
                 this.selectedMessage = message;
+                this.senderAvatar = `/uploads/${message[0].sender.profile.profile_avatar}`;
                 this.showMessage = true;
                 this.resetToBottom();
             },

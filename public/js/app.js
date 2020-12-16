@@ -2003,6 +2003,7 @@ __webpack_require__.r(__webpack_exports__);
       showMessage: false,
       message: '',
       selectedMessage: {},
+      senderAvatar: '',
       items: [{
         message: 'Foo'
       }, {
@@ -2028,6 +2029,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     toggleMessage: function toggleMessage(message) {
       this.selectedMessage = message;
+      this.senderAvatar = "/uploads/".concat(message[0].sender.profile.profile_avatar);
       this.showMessage = true;
       this.resetToBottom();
     },
@@ -2155,6 +2157,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Orders",
@@ -2162,12 +2171,19 @@ __webpack_require__.r(__webpack_exports__);
     StripePayment: _StripePayment__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   props: ['orders', 'user_id'],
+  mounted: function mounted() {
+    this.userAvatar = window.userAvatar;
+  },
   data: function data() {
     return {
       stripeAPIToken: 'pk_test_51HYtK4IkgVE5fsdbw5t4QKt9H1ZwBNYLT3AwJ3ph2sRflM1hp9n1KQ3KwKiuOCw3bOsxGzLx3ZipFNplaqpTqsZC00OXytB36F',
       stripe: '',
+      userAvatar: '',
       elements: '',
       card: '',
+      orderImage: '',
+      currentOrderStatus: '',
+      orderProviderImage: '',
       showOrder: false,
       selectedOrder: {
         provider: {
@@ -2180,6 +2196,19 @@ __webpack_require__.r(__webpack_exports__);
           service_slug: ''
         }
       },
+      orderStatuses: [{
+        text: 'In Progress',
+        value: 'in-progress'
+      }, {
+        text: 'Pending',
+        value: 'pending'
+      }, {
+        text: 'Completed',
+        value: 'completed'
+      }, {
+        text: 'Delayed',
+        value: 'delayed'
+      }],
       items: [{
         message: 'Foo'
       }, {
@@ -2199,9 +2228,23 @@ __webpack_require__.r(__webpack_exports__);
     updateOrder: function updateOrder() {
       this.selectedOrder.order_has_paid = 'yes';
     },
+    updateStatus: function updateStatus() {
+      var _this = this;
+
+      var index = this.orders.findIndex(function (order) {
+        return order.order_id === _this.selectedOrder.order_id;
+      });
+      axios.get("/dashboard/orders/".concat(this.selectedOrder.order_id, "/").concat(this.currentOrderStatus)).then(function (res) {
+        alert('Status Updated');
+        _this.orders[index].order_status = _this.currentOrderStatus;
+      });
+    },
     selectOrder: function selectOrder(order) {
       this.selectedOrder = order;
       this.showOrder = true;
+      this.currentOrderStatus = order.order_status;
+      this.orderImage = "/uploads/".concat(order.service.images[0].si_image);
+      this.orderProviderImage = "/uploads/".concat(order.provider.profile.profile_avatar);
     },
     includeStripe: function includeStripe(URL, callback) {
       var documentTag = document,
@@ -59161,7 +59204,8 @@ var render = function() {
                     staticClass: "mr-3 rounded",
                     attrs: {
                       src:
-                        "https://images.unsplash.com/photo-1551741568-53a19562313c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&h=50&q=60",
+                        "/uploads/" + message[0].sender.profile.profile_avatar,
+                      width: "60",
                       alt: "..."
                     }
                   }),
@@ -59222,7 +59266,16 @@ var render = function() {
                     },
                     [
                       _c("div", { staticClass: "d-flex align-items-center" }, [
-                        _vm._m(0, true),
+                        _c("div", [
+                          _c("img", {
+                            staticClass: "rounded-circle",
+                            attrs: {
+                              src: _vm.senderAvatar,
+                              width: "60",
+                              alt: "..."
+                            }
+                          })
+                        ]),
                         _vm._v(" "),
                         _c("h5", { staticClass: "m-0 mx-1" }, [
                           _vm._v(_vm._s(conversation.sender.name))
@@ -59304,23 +59357,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("img", {
-        staticClass: "rounded-circle",
-        attrs: {
-          src:
-            "https://images.unsplash.com/photo-1551741568-53a19562313c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=40&h=40&q=60",
-          alt: "..."
-        }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -59406,7 +59443,8 @@ var render = function() {
                         staticClass: "mr-3 rounded-circle",
                         attrs: {
                           src:
-                            "https://images.unsplash.com/photo-1551741568-53a19562313c?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=50&h=50&q=60",
+                            "/uploads/" + order.provider.profile.profile_avatar,
+                          width: "60",
                           alt: "..."
                         }
                       }),
@@ -59501,10 +59539,7 @@ var render = function() {
                 [
                   _c("img", {
                     staticClass: "img-fluid",
-                    attrs: {
-                      src:
-                        "https://images.unsplash.com/photo-1492707892479-7bc8d5a4ee93?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=900&q=60"
-                    }
+                    attrs: { src: _vm.orderImage }
                   })
                 ]
               )
@@ -59518,7 +59553,7 @@ var render = function() {
                   _c(
                     "small",
                     { staticClass: "badge badge-warning py-1 px-2" },
-                    [_vm._v(_vm._s(_vm.selectedOrder.order_status))]
+                    [_vm._v(_vm._s(_vm.currentOrderStatus))]
                   )
                 ]),
                 _vm._v(" "),
@@ -59564,7 +59599,61 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1)
+              _c("div", { staticClass: "margin-top-minus-50" }, [
+                _c("img", {
+                  staticClass: "rounded-circle shadow",
+                  attrs: { src: _vm.orderProviderImage, width: "60" }
+                }),
+                _vm._v(" "),
+                _vm._m(1)
+              ])
+            ]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", [
+              _c("h5", [_vm._v("Update Order Status")]),
+              _vm._v(" "),
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.currentOrderStatus,
+                      expression: "currentOrderStatus"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: [
+                      function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.currentOrderStatus = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      },
+                      _vm.updateStatus
+                    ]
+                  }
+                },
+                _vm._l(_vm.orderStatuses, function(orderStatus) {
+                  return _c(
+                    "option",
+                    { domProps: { value: orderStatus.value } },
+                    [_vm._v(_vm._s(orderStatus.text))]
+                  )
+                }),
+                0
+              )
             ]),
             _vm._v(" "),
             _c("hr"),
@@ -59602,7 +59691,17 @@ var render = function() {
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "text-right" },
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.selectedOrder.order_has_paid !== "yes",
+                    expression: "selectedOrder.order_has_paid !== 'yes'"
+                  }
+                ],
+                staticClass: "text-right"
+              },
               [
                 _c("stripe-payment", {
                   attrs: {
@@ -59633,21 +59732,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "margin-top-minus-50" }, [
-      _c("img", {
-        staticClass: "rounded-circle shadow",
-        attrs: {
-          src:
-            "https://images.unsplash.com/photo-1516876437184-593fda40c7ce?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=60&h=60&q=100"
-        }
-      }),
-      _vm._v(" "),
-      _c("h5", { staticClass: "text-danger font-weight-bold" }, [
-        _c("i", { staticClass: "feather2", attrs: { "data-feather": "star" } }),
-        _c("i", { staticClass: "feather2", attrs: { "data-feather": "star" } }),
-        _c("i", { staticClass: "feather2", attrs: { "data-feather": "star" } }),
-        _c("i", { staticClass: "feather2", attrs: { "data-feather": "star" } })
-      ])
+    return _c("h5", { staticClass: "text-danger font-weight-bold" }, [
+      _c("i", { staticClass: "feather2", attrs: { "data-feather": "star" } }),
+      _c("i", { staticClass: "feather2", attrs: { "data-feather": "star" } }),
+      _c("i", { staticClass: "feather2", attrs: { "data-feather": "star" } }),
+      _c("i", { staticClass: "feather2", attrs: { "data-feather": "star" } })
     ])
   }
 ]
