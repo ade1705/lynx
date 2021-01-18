@@ -62,6 +62,7 @@
                     </div>
                     <div class="border bg-white shadow-sm">
                         <div class="height-300 overflow-auto p-4 pr-0">
+                            @if($reviews->count() === 0)<p>No reviews yet.</p> @endif
                             @foreach($reviews as $review)
                                 <div class="review border-bottom py-2">
                                     <div class="d-flex">

@@ -25,6 +25,7 @@ Vue.component('messages', require('./components/messages/Messages.vue').default)
 Vue.component('service-description', require('./components/services/ServiceDescription').default);
 Vue.component('service-slider', require('./components/services/ServiceSlider').default);
 Vue.component('service-images', require('./components/services/ServiceImages').default);
+Vue.component('hero-carousel', require('./components/hero/HeroCarousel').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

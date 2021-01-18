@@ -42,6 +42,7 @@ Route::patch('/dashboard/profile/{id}', [ProfileController::class, 'update'])->n
 
 Route::post('/service-provider/review', [ReviewController::class, 'save'])->name('new-review');
 
+Route::get('/services/categories/{categoryId}', [ServiceController::class, 'categorySearch'])->name('search-categories');
 Route::get('/services/search', [ServiceController::class, 'search'])->name('search-services');
 Route::post('/services/search', [ServiceController::class, 'search'])->name('search-services');
 

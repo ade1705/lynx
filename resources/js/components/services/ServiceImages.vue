@@ -1,7 +1,10 @@
 <template>
     <div>
+        <div style="height: 30px">
+            <p class="font-weight-bolder" v-if="isLoading">Loading...</p>
+        </div>
         <input type="hidden" name="service_images" v-model="images" />
-        <div class="d-flex py-2">
+        <div class="d-flex py-2" v-bind:class="{ disabled: isLoading }">
             <div class="mr-2" style="width: 80px; height: 80px;"  v-for="(image, index) in images">
                 <img v-bind:src="`/uploads/${image}`" class="img-fluid" width="80" />
             </div>
@@ -20,7 +23,8 @@
         props: ['user_id', 'uploaded_images'],
         data(){
             return{
-                images: []
+                images: [],
+                isLoading: false
             }
         },
         mounted() {
@@ -33,6 +37,7 @@
                 this.$refs.file.click()
             },
             uploadFile: function () {
+                this.isLoading = true;
                 let formData = new FormData();
                 formData.append('file', this.$refs.file.files[0]);
                 axios.post( '/api/upload-image', formData, {
@@ -41,6 +46,7 @@
                         }
                     }
                 ).then(data => {
+                    this.isLoading = false  ;
                     this.images.push(data.data.file_url);
                 })
                 .catch(error => {

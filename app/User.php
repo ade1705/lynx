@@ -15,6 +15,9 @@ class User extends Authenticatable
     use Notifiable;
     use Billable;
 
+    const USER_TYPE_CUSTOMER = 'customer';
+    const USER_TYPE_PROVIDER = 'provider';
+
     /**
      * The attributes that are mass assignable.
      *

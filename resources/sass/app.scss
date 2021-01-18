@@ -1,5 +1,12 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;1,200;1,300;1,400;1,500&display=swap');
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-size: 0.75rem;
+}
 
 // Variables
 @import 'variables';
@@ -12,7 +19,6 @@
     background: -webkit-linear-gradient(to top, #FFFDE4, #E8F2FF);  /* Chrome 10-25, Safari 5.1-6 */
     background: linear-gradient(to top, #FFFDE4, #E8F2FF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
-
 .outline-0 {
     outline: 0;
 }
@@ -31,14 +37,25 @@
     &-500 {
         font-weight: 500;
     }
+    &-600 {
+        font-weight: 600;
+    }
 }
 
 .height {
     &-35 {
         height: 35px;
     }
+    &-65 {
+        height: 65px;
+    }
     &-200 {
         height: 200px;
+    }
+}
+.min-height {
+    &-500 {
+        min-height: 500px;
     }
 }
 
@@ -125,5 +142,29 @@
 .height {
     &-300 {
     height: 300px;
+    }
+}
+.disabled{
+    pointer-events: none;
+    cursor: not-allowed;
+    opacity: 0.65;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.z-index {
+    &-5 {
+        z-index: 5
+    }
+}
+
+@media (min-width: 768px) {
+    .w-md-150 {
+        width: 150%!important;
+    }
+}
+@media (max-width: 768px) {
+    .display-4 {
+        font-size: 3rem;
     }
 }

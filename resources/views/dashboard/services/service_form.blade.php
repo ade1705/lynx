@@ -27,10 +27,9 @@
         <label for="category small text-muted" >Category</label>
         <select value=""  name="service_category_id" class="form-control p-0 border-left-0 border-right-0 border-top-0 border-bottom" id="unit">
             <option value="">Choose...</option>
-            <option value="1" {{ old('service_category_id', $service->service_category_id ?? 0) == 1 ? 'selected' : '' }}>Business Cards</option>
-            <option value="2" {{ old('service_category_id', $service->service_category_id ?? 0) == 2 ? 'selected' : '' }}>Logos</option>
-            <option value="3" {{ old('service_category_id', $service->service_category_id ?? 0) == 3 ? 'selected' : '' }}>Video Editing</option>
-            <option value="4" {{ old('service_category_id', $service->service_category_id ?? 0) == 4 ? 'selected' : '' }}>Accounting & Tax Services</option>
+            @foreach(\App\Lib\Services\Service::SERVICE_CATEGORIES as $index => $category)
+                <option value="1" {{ old('service_category_id', $service->service_category_id ?? 0) == ($index + 1) ? 'selected' : '' }}>{{ $category }}</option>
+            @endforeach
         </select>
     </div>
 </div>

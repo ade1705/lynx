@@ -35,6 +35,13 @@ class ServiceController extends Controller
         return view('services.services', compact('services'));
     }
 
+    public function categorySearch(int $categoryId)
+    {
+        $categoryId = $categoryId ?? 0;
+        $services = $this->serviceRepository->getServices($categoryId);
+        return view('services.services', compact('services'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *

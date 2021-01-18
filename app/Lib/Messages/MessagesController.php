@@ -3,6 +3,8 @@ namespace App\Lib\Messages;
 
 use App\Http\Controllers\Controller;
 use App\Lib\Services\ServiceRepository;
+use App\Lib\User\UserRepository;
+use App\Notifications\MessageReceived;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,15 +14,21 @@ class MessagesController extends Controller
      * @var MessageRepository
      */
     private $messageRepository;
+    /**
+     * @var UserRepository
+     */
+    private $userRepository;
 
     /**
      * DashboardServicesController constructor.
      * @param MessageRepository $messageRepository
+     * @param UserRepository $userRepository
      */
-    public function __construct(MessageRepository $messageRepository)
+    public function __construct(MessageRepository $messageRepository, UserRepository $userRepository)
     {
         $this->middleware('auth', ['except' => ['apiStore']]);
         $this->messageRepository = $messageRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function index()
@@ -45,6 +53,8 @@ class MessagesController extends Controller
         $message->message_sender_id = Auth::id();
         $message->message_receiver_id = $request->message_receiver_id;
         $this->messageRepository->save($message);
+        $user = $this->userRepository->find($request->message_receiver_id);
+        $user->notify(new MessageReceived());
         return redirect()->back()->with('status', 'Message sent!');
     }
 

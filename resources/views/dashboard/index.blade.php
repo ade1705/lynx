@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="py-5">
-    yo
+<div class="">
+    @include('home.hero')
 </div>
 @endsection

@@ -45,6 +45,14 @@ class Service extends Model
     /**
      * @return string
      */
+    public function getCategoryAttribute(): string
+    {
+        return self::SERVICE_CATEGORIES[(int)$this->service_category_id - 2];
+    }
+
+    /**
+     * @return string
+     */
     public function getImagesStringAttribute(): string
     {
         return implode(",", Arr::pluck($this->images, 'full_url'));

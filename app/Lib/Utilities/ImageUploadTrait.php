@@ -12,7 +12,7 @@ trait ImageUploadTrait
     public function uploadImage(UploadedFile $filename): string
     {
         $name = md5(microtime() . $filename->getClientOriginalName()) . "." . $filename->extension();
-        $filename->move('uploads/', $name);
+        $filename->move('public/uploads/', $name);
         return $name;
     }
 }

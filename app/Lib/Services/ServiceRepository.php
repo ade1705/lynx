@@ -21,7 +21,7 @@ class ServiceRepository
      */
     public function getByUserId(int $userId): Collection
     {
-        return Service::where('service_user_id', $userId)->with('images')->get();
+        return Service::where('service_user_id', $userId)->with('images', 'user.profile')->get();
     }
 
     /**
